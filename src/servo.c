@@ -3,7 +3,7 @@
 
 #define PWM_MIN 57 //full right
 #define PWM_MAX 218 //full left
-#define PWM_DELAY 15000 //delay between servo positioning
+#define PWM_DELAY 50000 //delay between servo positioning
 #define PWM_FREQUENCY 255 //standard frequency for arduino PWM
 
 
@@ -32,11 +32,12 @@ void *servo_thread(void *thrd_args) {
             pwm_set_duty_cycle(&pwm, duty_cycle);
             duty_cycle ++;
         }
-
+        thrd_yield();
         while (duty_cycle > PWM_MIN) {
             thrd_sleep_us(PWM_DELAY);
             pwm_set_duty_cycle(&pwm, duty_cycle);
             duty_cycle --;
         }
+        thrd_yield();
     }  
 }
